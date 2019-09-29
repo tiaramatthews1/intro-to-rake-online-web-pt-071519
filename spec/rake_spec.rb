@@ -9,14 +9,14 @@ describe "Rakefile" do
 
   describe 'namespace :greeting' do
     describe 'greeting:hello' do
-      xit "should print out 'hello from Rake!'" do
+      it "should print out 'hello from Rake!'" do
         expect($stdout).to receive(:puts).with("hello from Rake!")
         Rake::Task["greeting:hello"].invoke
       end
     end
 
     describe 'greeting:hola' do
-      xit "should print out 'hola de Rake!'" do
+      it "should print out 'hola de Rake!'" do
         expect($stdout).to receive(:puts).with("hola de Rake!")
         Rake::Task["greeting:hola"].invoke
       end
@@ -31,11 +31,11 @@ describe "Rakefile" do
 
   describe 'namespace :db' do
     describe 'db:migrate' do
-      xit "invokes the :environment task as a dependency" do
+      it "invokes the :environment task as a dependency" do
         expect(Rake::Task["db:migrate"].prerequisites).to include("environment")
       end
 
-      xit "create the students table in the database" do
+      it "create the students table in the database" do
         Rake::Task["db:migrate"].invoke
         sql = "SELECT name FROM sqlite_master WHERE type='table'ORDER BY name;"
         expect(DB[:conn].execute(sql).first).to include("students")
@@ -48,7 +48,7 @@ describe "Rakefile" do
         recreate_table
       end
 
-      xit "seeds the database with dummy data from a seed file" do
+      it "seeds the database with dummy data from a seed file" do
         Rake::Task["db:seed"].invoke
         sql = "select * from students;"
         dummy_data = DB[:conn].execute(sql)
